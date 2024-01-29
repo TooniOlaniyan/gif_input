@@ -53,7 +53,7 @@ const Home: React.FC = () => {
   };
 
   return (
-    <main className="flex justify-center items-center h-[100vh] flex-col bg-slate-600 gap-[3rem] md:gap-4">
+    <main className="flex justify-center items-center h-[100vh] flex-col bg-lime-900 gap-[3rem] md:gap-4">
       <div className="w-[15rem] h-[13rem] overflow-hidden md:w-[20rem] md:h-[20rem] flex justify-center items-center">
         <Image
           className="w-[100%]"
@@ -79,7 +79,7 @@ const Home: React.FC = () => {
         <input
           onChange={handleChange}
           placeholder="Password"
-          className="p-2 border-0 outline-none"
+          className="p-2 border text-white border-white outline-none rounded-md bg-transparent"
           type={showPassword ? "text" : "password"}
           value={password}
           maxLength={16}
@@ -87,7 +87,7 @@ const Home: React.FC = () => {
         />
         <div
           className={
-            password.length < 10 ? "text-red-500 text-sm pt-1" : "text-white"
+            password.length < 10 ? "text-yellow-500 text-sm pt-1" : "text-white"
           }
         >
           {password && validationError}
