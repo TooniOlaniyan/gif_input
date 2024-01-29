@@ -11,19 +11,11 @@ const Home: React.FC = () => {
   const minLength = 10;
   useEffect(() => {
     return () => {
-      if (password.length >= minLength && timer) {
+      if (timer) {
         clearTimeout(timer);
       }
     };
-  }, [password , timer , minLength]);
-
-  const handleInputChange = () => {
-    if (password.length > minLength) {
-      setImageSrc("/images/correct.gif");
-    } else {
-      setImageSrc("/images/typing-type.gif");
-    }
-  };
+  }, [timer]);
   const handleCheckbox = () => {
     setImageSrc("/images/sneaky.gif");
     setShowPassword((prevShowPassword) => !prevShowPassword);
@@ -33,7 +25,7 @@ const Home: React.FC = () => {
     if (password.length < minLength) {
       return `Password must be at least ${minLength} characters long.`;
     }
-    if (password.length >= minLength) {
+    if (password.length > minLength) {
       return `Your password is fine now`;
     } else {
       return "";
@@ -45,18 +37,23 @@ const Home: React.FC = () => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newPassword = event.target.value;
     setPassword(newPassword);
-    if (password.length <= minLength) {
+    if (timer) {
+      clearTimeout(timer);
+    }
+    if (password.length > minLength) {
+      setImageSrc("/images/correct.gif");
+    } else {
+      setImageSrc("/images/typing-type.gif");
       setTimer(
         setTimeout(() => {
           setImageSrc("/images/still-waiting.gif");
         }, 1000)
       );
     }
-    handleInputChange();
   };
 
   return (
-    <main className="flex justify-center items-center h-[100vh] flex-col bg-violet-950 gap-[3rem] md:gap-4">
+    <main className="flex justify-center items-center h-[100vh] flex-col bg-slate-600 gap-[3rem] md:gap-4">
       <div className="w-[15rem] h-[13rem] overflow-hidden md:w-[20rem] md:h-[20rem] flex justify-center items-center">
         <Image
           className="w-[100%]"
@@ -85,6 +82,7 @@ const Home: React.FC = () => {
           className="p-2 border-0 outline-none"
           type={showPassword ? "text" : "password"}
           value={password}
+          maxLength={16}
           ref={inputRef}
         />
         <div
